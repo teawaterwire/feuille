@@ -48,6 +48,24 @@
 
     <div class="container" ng-controller="MainCtrl">
 
+      <div class="jumbotron">
+        <h3 class="text-center">
+          {{ grandTotal }} <span class="fa fa-euro"></span>
+        </h3>
+      </div>
+
+      <ul class="list-group">
+        <li class="list-group-item" ng-repeat="transaction in transactions">
+          <div class="row">
+            <div class="col-md-1"><span class="label label-info">{{ transaction.date | date }}</span></div>
+            <div class="col-md-10 col-md-offset-1 bg-{{ transaction.type === 'add' ? 'success' : 'danger' }}">
+              <h4>
+              {{ transaction.amount }} <span class="fa fa-euro"></span>
+              </h4>
+            </div>
+          </div>
+        </li>
+      </ul>
     
     </div>
     
