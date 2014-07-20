@@ -36,4 +36,13 @@ angular.module('wallet')
       return processAmount('remove');
     };
 
+  })
+  .directive('transactionList', function() {
+    return {
+      restrict: 'E',
+      scope: {
+        transactions: '='
+      },
+      templateUrl: 'partials/transaction-list.html'
+    };
   });
