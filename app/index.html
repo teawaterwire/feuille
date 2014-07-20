@@ -54,11 +54,20 @@
         </h3>
       </div>
 
+      <div class="well">
+        <div ng-show="error" class="alert alert-danger">{{ error }}</div>
+        <form class="form-inline {{ amountForm.$valid ? '' : 'has-error' }}" name="amountForm">
+          <input ng-model="amount" type="number" class="form-control" placeholder="Enter amount" min="0" required>
+          <button ng-disabled="!amountForm.$valid" class="btn btn-success" ng-click="add()">ADD</button>
+          <button ng-disabled="!amountForm.$valid" class="btn btn-danger" ng-click="remove()">REMOVE</button>
+        </form>
+      </div>
+
       <ul class="list-group">
-        <li class="list-group-item" ng-repeat="transaction in transactions">
+        <li class="list-group-item" ng-repeat="transaction in transactions | orderBy:'-date'">
           <div class="row">
-            <div class="col-md-1"><span class="label label-info">{{ transaction.date | date }}</span></div>
-            <div class="col-md-10 col-md-offset-1 bg-{{ transaction.type === 'add' ? 'success' : 'danger' }}">
+            <div class="col-md-1"><span class="label label-info">{{ transaction.date | date:'short' }}</span></div>
+            <div class="col-md-8 col-md-offset-1 bg-{{ transaction.type === 'add' ? 'success' : 'danger' }}">
               <h4>
               {{ transaction.amount }} <span class="fa fa-euro"></span>
               </h4>

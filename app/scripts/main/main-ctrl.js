@@ -3,13 +3,37 @@
 angular.module('wallet')
   .controller('MainCtrl', function ($scope) {
 
-    $scope.grandTotal = 45;
+    $scope.grandTotal = 0;
+    $scope.transactions = [];
 
-    var transactions = [];
-    for (var i = 0; i < 10; i++) {
-      transactions.push({date: new Date(), amount: i + Math.random(), type: (i % 3 ? 'add' : 'remove')});
+    function isValid(val, action) {
+      if (action === 'remove') {
+        return (val > 0) && ($scope.grandTotal - val >= 0) ;
+      }
+      return val > 0;
+    }
+
+    function processAmount(action) {
+      var amount = parseFloat($scope.amount, 10);
+      if (amount && !isValid(amount, action)) {
+        $scope.error = 'Nope.';
+        return;
+      }
+      $scope.error = '';
+      $scope.grandTotal += (action === 'add' ? amount : -amount);
+      $scope.transactions.push({
+        date: new Date(),
+        amount: amount,
+        type: action
+      });
+    }
+
+    $scope.add = function() {
+      return processAmount('add');
     };
 
-    $scope.transactions = transactions;
+    $scope.remove = function() {
+      return processAmount('remove');
+    };
 
   });
