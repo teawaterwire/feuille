@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('wallet', ['ngAnimate', 'ngCookies']);
+angular.module('wallet', ['walletNav', 'walletMain']);

@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('wallet')
-  .controller('MainCtrl', function ($scope) {
+angular.module('walletMain', ['ngCookies'])
+  .controller('MainCtrl', ['$scope', '$cookieStore', function ($scope, $cookieStore) {
 
-    $scope.grandTotal = 0;
-    $scope.transactions = [];
+    $scope.grandTotal = $cookieStore.get('grandTotal') || 0;
+    $scope.transactions = $cookieStore.get('transactions') || [];
 
     function isValid(val, action) {
       if (action === 'remove') {
@@ -15,17 +15,24 @@ angular.module('wallet')
 
     function processAmount(action) {
       var amount = parseFloat($scope.amount, 10);
+
       if (amount && !isValid(amount, action)) {
         $scope.error = 'Nope.';
         return;
       }
+
       $scope.error = '';
+      // Update grandTotal
       $scope.grandTotal += (action === 'add' ? amount : -amount);
+      // Update transactions
       $scope.transactions.push({
         date: new Date(),
         amount: amount,
         type: action
       });
+      // Store grandTotal and transactions with cookieStore
+      $cookieStore.put('grandTotal', $scope.grandTotal);
+      $cookieStore.put('transactions', $scope.transactions);
     }
 
     $scope.add = function() {
@@ -36,13 +43,4 @@ angular.module('wallet')
       return processAmount('remove');
     };
 
-  })
-  .directive('transactionList', function() {
-    return {
-      restrict: 'E',
-      scope: {
-        transactions: '='
-      },
-      templateUrl: 'partials/transaction-list.html'
-    };
-  });
+  }]);

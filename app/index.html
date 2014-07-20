@@ -27,7 +27,7 @@
     <![endif]-->
 
     
-     <div class="navbar navbar-inverse navbar-static-top">
+     <div class="navbar navbar-inverse navbar-static-top" ng-controller="NavCtrl">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
@@ -38,8 +38,8 @@
         <div class="navbar-collapse collapse" id="main-navbar">
           <ul class="nav navbar-nav">
             <li class="active"><a ng-href="#">Home</a></li>
-            <li><a ng-href="#">Reset</a></li>
-            <li><a ng-href="#">View Source</a></li>
+            <li><a ng-href="#" ng-click="reset()">Reset</a></li>
+            <li><a href="https://github.com/teawaterwire">View Source</a></li>
           </ul>
         </div>
       </div>
@@ -92,6 +92,8 @@
     <!-- build:js({app,.tmp}) scripts/main.js -->
     <script src="scripts/wallet.js"></script>
     <script src="scripts/main/main-ctrl.js"></script>
+    <script src="scripts/main/directives.js"></script>
+    <script src="scripts/nav/nav-ctrl.js"></script>
     <!-- inject:partials -->
     <!-- endinject -->
     <!-- endbuild -->
